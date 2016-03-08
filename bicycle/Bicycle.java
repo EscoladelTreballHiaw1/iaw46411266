@@ -1,95 +1,217 @@
 /*
- * Bicycle.java
+ * Program.java        2016
  * 
- * Copyright 2010-2012 Mònica Ramírez Arceda <mramirez@escoladeltreball.org>
+ * Modelizes the program.
+ * 
+ * Copyright 2016 <soniafandos@hotmail.com>
  * 
  * This is free software, licensed under the GNU General Public License v3.
  * See http://www.gnu.org/licenses/gpl.html for more information.
  */
 
-package bicycle;
-
-/**
- * Modelizes a bicycle.
- * 
- * A bicycle has a model, rear and front sprockets that may be changed if the bicycle is moving and can be accelerated
- * or braked. The minimum rear and front sprockets have number 1. The second rear and front sprockets have number 2 and
- * so on.
- */
 public class Bicycle {
-
-    /** The bicycle's model. */
+    /** The bicycle's model */
     private String model;
-    /** The engaged front sprocket. */
+    /** The engaged front sprocket */
     private int frontSprocket;
-    /** The engaged rear sprocket. */
+    /** The engaged rear sprocket */
     private int rearSprocket;
-    /** The number of front sprockets the bicyle has. */
+    /** The number of front sprockets the bicycle has */
     private final int nFrontSprockets;
-    /** The number of rear sprockets the bicyle has. */
+    /** The number of rear sprockets the bicycle has */
     private final int nRearSprockets;
-    /** The bicycle's speed in km/h. */
+    /** The bicycle's speed in km/h */
     private double v;
     /** The maximum speed of the bicycle */
     private final static int VMAX = 100;
     /** Increment of the bicycle speed */
     private final static int DV = 5;
 
-    /**
-     * Constructor by default. Creates a stopped mountain bike with 3 front sprockets, 7 rear sprockets and with the
-     * first front and rear sprockets engaged.
+    /* Constructors
+     *
+     * Constructor by default.
+     *   
      */
     public Bicycle() {
         this.model = "Mountain bike";
         this.frontSprocket = 3;
-        this.rearSprocket = 1;
+        this.rearSprocket = 3;
         this.nFrontSprockets = 3;
         this.nRearSprockets = 7;
         this.v = 0;
     }
-
+    
     /**
-     * Constructor. Creates a mountain bike with the first rear sprocket engaged and the last front sprocket engaged
+     * Constructor.
      * 
-     * @param nFrontSprockets The number of front sprockets of the bicycle.
-     * @param nRearSprockets the number of rear sprockets of the bicycle..
-     * @param v The bicycle's speed in km/h.
+     * @param nFrontSprockets the number of front sprockets.
+     * @param nRearSprockets the number of rear sprockets.
+     * @param v the velocity of the bicycle
      */
     public Bicycle(int nFrontSprockets, int nRearSprockets, double v) {
         this.model = "Mountain bike";
         this.nFrontSprockets = nFrontSprockets;
-        this.nRearSprockets = nRearSprockets;
-        this.frontSprocket = nFrontSprockets;
-        this.rearSprocket = 1;
+        // Impedim que el número de pinyons sigui inferior a 3, en aquest cas hi coloquem 3.
+        if (nRearSprockets < 3) {
+            this.nRearSprockets = 3;
+        } else {
+            this.nRearSprockets = nRearSprockets;
+        }
+        // Impedim que el plat en el que ens trobem sigui neagtiu, en aquest cas el coloquem en el primer plat
+        if (frontSprocket <= 0) {
+            this.frontSprocket = 1;
+        // Si el plat en el que es vol ficar és superior al número de plats ens posem a l'ultim
+        } else if (frontSprocket > nFrontSprockets) {
+            this.frontSprocket = nFrontSprockets;
+        // Si és una bona opció deixem el que vol l'usuari
+        } else {
+            this.frontSprocket = nFrontSprockets;
+        }
+        this.rearSprocket = 3;
         this.v = v;
     }
-
+    
     /**
-     * Constructor.
+     * Constructor
      * 
-     * @param model The bicycle's model.
-     * @param frontSprocket The engaged front sprocket.
-     * @param rearSprocket The rear front sprocket.
-     * @param nFrontSprockets The number of front sprockets the bicyle has.
-     * @param nRearSprockets The number of rear sprockets the bicyle has.
-     * @param v The bicycle's speed in km/h.
+     * @param model the model of the bicycle
+     * @param frontSprocket the front sprocket that we are using
+     * @param rearSprocket the rear sprocket that we are using
+     * @param nFrontSprockets number of front sprockets
+     * @param nRearSprocket number of rear sprockets
+     * @param v velocity of the bike
      */
     public Bicycle(String model, int frontSprocket, int rearSprocket, int nFrontSprockets, int nRearSprockets, double v) {
         this.model = model;
-        this.frontSprocket = frontSprocket;
-        this.rearSprocket = rearSprocket;
         this.nFrontSprockets = nFrontSprockets;
-        this.nRearSprockets = nRearSprockets;
+        System.out.println("nFrontSprockets: " + nFrontSprockets);
+        System.out.println("nRearSprockets: " + nRearSprockets);
+        System.out.println("frontSprocket: " + frontSprocket);
+        System.out.println("rearSprocket: " + rearSprocket);
+        // Impedim que el número de pinyons sigui inferior a 3, en aquest cas hi coloquem 3.
+        if (nRearSprockets < 3) {
+            this.nRearSprockets = 3;
+        } else {            
+            this.nRearSprockets = nRearSprockets;
+        }
+        
+        // Impedim que el plat en el que ens trobem sigui neagtiu, en aquest cas el coloquem en el primer plat
+        if (frontSprocket <= 0) {
+            this.frontSprocket = 1;
+        // Si el plat en el que es vol ficar és superior al número de plats ens posem a l'ultim
+        } else if (frontSprocket > nFrontSprockets) {
+            this.frontSprocket = this.nFrontSprockets;
+        // Si és una bona opció deixem el que vol l'usuari
+        } else {
+            this.frontSprocket = frontSprocket;
+        }
+        
+        // Impedim que el pinyo en el que ens trobem sigui neagtiu, en aquest cas el coloquem en el primer plat
+        if (rearSprocket <= 0) {
+            this.rearSprocket = 1;
+        // Si el plat en el que es vol ficar és superior al número de plats ens posem a l'ultim
+        } else if (rearSprocket > this.nRearSprockets) {
+            this.rearSprocket = this.nRearSprockets;
+        // Si és una bona opció deixem el que vol l'usuari
+        } else {
+            this.rearSprocket = rearSprocket;
+        }
+        this.v = v;
+        System.out.println("nFrontSprockets: " + this.nFrontSprockets);
+        System.out.println("nRearSprockets: " + this.nRearSprockets);
+        System.out.println("frontSprocket: " + this.frontSprocket);
+        System.out.println("rearSprocket: " + this.rearSprocket);
+        
+    }
+    
+    // Setter and getters
+    public String getModel() {
+        return model;
+    }
+    
+    public void setModel(String model) {
+        this.model = model.trim();
+    }
+    
+    public int getRearSprocket() {
+        return rearSprocket;
+    }
+    
+    public void setRearSprocket(int rearSprocket) {
+        System.out.println(rearSprocket);
+        System.out.println(this.nRearSprockets);
+        System.out.println(this.rearSprocket);
+        
+        // Impedim que el pinyo en el que ens trobem sigui neagtiu, en aquest cas el coloquem en el primer plat
+        if (rearSprocket <= 0) {
+            this.rearSprocket = 1;
+        // Si el pinyo en el que es vol ficar és superior al número de plats ens posem a l'ultim
+        } else if (rearSprocket > this.nRearSprockets) {
+            this.rearSprocket = nRearSprockets;
+        // Si és una bona opció deixem el que vol l'usuari
+        } else {
+            this.rearSprocket = nRearSprockets;
+        }
+    }
+    
+    public int getFrontSprocket() {
+        return frontSprocket;
+    }
+    
+    public void setFrontSprocket(int frontSprocket) {
+        // Impedim que el plat en el que ens trobem sigui neagtiu, en aquest cas el coloquem en el primer plat
+        if (frontSprocket <= 0) {
+            this.frontSprocket = 1;
+        // Si el plat en el que es vol ficar és superior al número de plats ens posem a l'ultim
+        } else if (frontSprocket > nFrontSprockets) {
+            this.frontSprocket = nFrontSprockets;
+        // Si és una bona opció deixem el que vol l'usuari
+        } else {
+            this.frontSprocket = nFrontSprockets;
+        }
+    }
+    
+    /**
+     * Method that shows the velocity of the bike
+     * 
+     * @return v the velocity
+     */
+    public double getV() {
+        return v;
+    }
+    
+    /**
+     * Method that changes the velocity of the bike
+     * 
+     * @param v the new velocity
+     */
+    public void setV(double v) {
         this.v = v;
     }
-
+    
     /**
-     * Changes the engaged front sprocket. Increases or decreases the front sprocket by 1. The bicycle can't be stopped.
+     * Method that accelerates the velocity of the bicycle 5km/h
+     */
+    public void accelerate() {
+        if (v + Bicycle.DV <= Bicycle.VMAX) {
+            this.v = v + this.DV;
+        }
+    }
+    
+    /**
+     * Method that brakes the velocity of the bicycle 5km/h
+     */
+    public void brake() {
+        if ( v - this.DV >= 0) {
+            this.v = v - this.DV;
+        }
+    }
+    
+    /**
+     * Method for see if we have changed the front sprocket.
      * 
-     * @param n A number that indicates if the front sprocket must be increased or decreased. If n is positive the front
-     *        sprocket will be increased. If n is negative the front sprocket will be decreased. If n is 0, the front
-     *        sprocket won't be changed.
-     * @return true if the front sprocket is changed, false otherwise.
+     * @param n the front number that we want
+     * @return true if it has changed, false otherwise
      */
     public boolean changeFrontSprocket(int n) {
         boolean isChanged = true;
@@ -102,14 +224,12 @@ public class Bicycle {
         }
         return isChanged;
     }
-
+    
     /**
-     * Changes the engaged rear sprocket. Increases or decreases the rear sprocket by 1. The bicycle can't be stopped.
+     * Method for see if we have changed the rear sprocket.
      * 
-     * @param n A number that indicates if the rear sprocket must be increased or decreased. If n is positive the rear
-     *        sprocket will be increased. If n is negative the rear sprocket will be decreased. If n is 0, the rear
-     *        sprocket won't be changed.
-     * @return true if the rear sprocket is changed, false otherwise.
+     * @param n the rear number that we want
+     * @return true if it has changed, false otherwise
      */
     public boolean changeRearSprocket(int num) {
         boolean isChanged = true;
@@ -122,57 +242,100 @@ public class Bicycle {
         }
         return isChanged;
     }
-
+    
     /**
-     * Accelerates the bicycle.
+     * Method that stop the bicycle. v = 0
      */
-    public void accelerate() {
-        double newV = this.v + Bicycle.DV;
-        if (newV > Bicycle.VMAX)
-            newV = Bicycle.VMAX;
-        this.v = newV;
+    public void stop() {
+        this.v = 0;
     }
-
+    
     /**
-     * Decreases the velocity of the bicycle.
+     * Metode que permet reduir la marxa. 
+     * 
+     * @return true si s'ha pogut fer el canvi de marxa, false altrament
      */
-    public void brake() {
-        double newV = this.v - Bicycle.DV;
-        if (newV < 0)
-            newV = 0;
-        this.v = newV;
+    public boolean slowDown() {
+        boolean hasChanged = false;
+        // Quan estem al plat(FRONT) més petit, anem augmentant el pinyó(REAR) fins al més gran
+        if (this.frontSprocket == 1) {
+           
+            if (this.rearSprocket + 1 == nRearSprockets) {
+                this.rearSprocket++;
+                this.frontSprocket--;
+                hasChanged = true;
+            } else if (this.rearSprocket != nRearSprockets) {
+                this.rearSprocket++;
+                hasChanged = true;
+            }
+        // Si no és el plat més petit només permet arribar fins al segon pinyo més gran
+        } else {
+            if (this.rearSprocket + 1 == nRearSprockets) {
+                this.rearSprocket++;
+                this.frontSprocket--;
+                hasChanged = true;
+            } else if (this.rearSprocket > 0 && this.rearSprocket < nRearSprockets) {
+                this.rearSprocket++;
+                hasChanged = true;
+            }
+        }
+        return hasChanged;
+    }
+    
+     /**
+     * Metode que permet augmentar la marxa. 
+     * 
+     * @return true si s'ha pogut fer el canvi de marxa, false altrament
+     */
+     public boolean speedUp() {
+        boolean hasChanged = false;
+        // Quan estem al plat(FRONT) més gran, anem disminuint el pinyó(REAR) fins al més petit
+        if (this.frontSprocket == this.nFrontSprockets) {
+           
+            if (this.rearSprocket == 2) {
+                this.rearSprocket--;
+                this.frontSprocket++;
+                hasChanged = true;
+            } else if (this.rearSprocket <= this.nRearSprockets && this.rearSprocket > 2) {
+                this.rearSprocket--;
+                hasChanged = true;
+            }
+        // Si no és el plat més gran només permet arribar fins al segon pinyo més petit
+        } else {
+            if (this.rearSprocket == 2) {
+                this.rearSprocket--;
+                this.frontSprocket++;
+                hasChanged = true;
+            } else if (this.rearSprocket > 2 && this.rearSprocket < nRearSprockets) {
+                this.rearSprocket--;
+                hasChanged = true;
+            }
+        }
+        return hasChanged;
     }
 
-    // Setter and getters
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model.trim();
-    }
-
-    public int getRearSprocket() {
-        return rearSprocket;
-    }
-
-    public void setRearSprocket(int rearSprocket) {
-        this.rearSprocket = rearSprocket;
-    }
-
-    public int getFrontSprocket() {
-        return frontSprocket;
-    }
-
-    public void setFrontSprocket(int frontSprocket) {
-        this.frontSprocket = frontSprocket;
-    }
-
-    public double getV() {
-        return v;
-    }
-
-    public void setV(double v) {
-        this.v = v;
-    }
+        
 }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

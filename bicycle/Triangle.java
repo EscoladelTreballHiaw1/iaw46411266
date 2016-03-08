@@ -1,0 +1,65 @@
+/*
+ * Program.java        2016
+ * 
+ * Modelizes the program.
+ * 
+ * Copyright 2016 <soniafandos@hotmail.com>
+ * 
+ * This is free software, licensed under the GNU General Public License v3.
+ * See http://www.gnu.org/licenses/gpl.html for more information.
+ */
+
+public class Triangle {
+    /** Real number with the length of the first triangle side */
+    private double side1;
+    /** Real number with the length of the second triangle side */
+    private double side2;
+    /** Real number with the length of the third triangle side */
+    private double side3;
+    
+    /*
+     * Constructors
+     * 
+     * Constructor by defauls
+     */
+    public Triangle() {
+        this.side1 = 3;
+        this.side2 = 4;
+        this.side3 = 5;
+    }
+    
+    /*
+     * Construstor 
+     * 
+     * @param side1 the first side
+     * @param side2 the second side
+     * @param side3 the third side
+     */
+    public Triangle(double side1, double side2, double side3) {
+        this.side1 = side1;
+        this.side2 = side2;
+        this.side3 = side3;
+    }
+    
+    
+    /*
+     * Method that calculates the perimeter of our triangle
+     * 
+     */
+    
+    public double perimeter() {
+        double sum = this.side1 + this.side2 + this.side3;
+        return sum;
+    }
+    
+    /*
+     * Method that calculates the area of out priangle
+     */
+    
+    public double area() {
+        double hero;
+        double semiarea = (this.side1 + this.side2 + this.side3) / 2;
+        hero = Math.sqrt(semiarea * (semiarea - this.side1) * (semiarea - this.side2) * (semiarea - this.side3));
+        return hero;
+    }
+}
